@@ -10,7 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run Clippy
+      - name: Install GTK4 dependencies
         run: |
-            sudo apt install libgtk-4-dev build-essential
-            cargo clippy --all-targets --all-features
+          sudo apt-get update
+          sudo apt-get install -y libgtk-4-dev build-essential
+          pkg-config --exists gtk4
+      - name: Run Clippy
+        run: cargo clippy --all-targets --all-features
